@@ -1,11 +1,17 @@
-# python-django-dsync-example
-A basic Django app that uses the [WorkOS Python SDK](https://github.com/workos-inc/workos-python) to support Directory Sync (DSync).
+# python-django-directory-sync-example
+A basic Django app that uses the [WorkOS Python SDK](https://github.com/workos-inc/workos-python) to support Directory Sync.
 
 ## Prerequisites
 - Python 3.6+
-- Completion of the [Create a New Directory Connection](https://workos.com/docs/directory-sync/guide/create-new-directory-connection) step in the WorkOS Directory Sync guide.
+
+## Directory Sync Setup with WorkOS
+First, follow the [Create a New Directory Connection](https://workos.com/docs/directory-sync/guide/create-new-directory-connection) step in the WorkOS Directory Sync guide.
+
+If you get stuck, please reach out to us at support@workos.com so we can help.
 
 ## Django Project Setup
+
+### Clone Directory
 
 1. In your CLI, navigate to the directory into which you want to clone this git repo.
    ```bash
@@ -15,19 +21,21 @@ A basic Django app that uses the [WorkOS Python SDK](https://github.com/workos-i
 2. Clone this git repo using your preferred secure method (HTTPS or SSH).
    ```bash
    # HTTPS
-   $ git clone https://github.com/erin-workos/python-django-dsync-example.git
+   $ git clone https://github.com/erin-workos/python-django-directory-sync-example.git
    ```
 
    or
 
    ```bash
    # SSH
-   $ git clone git@github.com:erin-workos/python-django-dsync-example.git
+   $ git clone git@github.com:erin-workos/python-django-directory-sync-example.git
    ```
+
+### Install Dependencies
 
 3. Navigate to the cloned repo.
    ```bash
-   $ cd python-django-dsync-example
+   $ cd python-django-directory-sync-example
    ```
 
 4. Create and source a Python virtual environment. You should then see `(env)` at the beginning of your command-line prompt.
@@ -42,12 +50,14 @@ A basic Django app that uses the [WorkOS Python SDK](https://github.com/workos-i
    (env) $ pip install -r requirements.txt
    ```
 
+### Set Environment Variables
+
 6. Obtain and make note of the following values. In the next step, these will be set as environment variables.
    - Your [WorkOS API key](https://dashboard.workos.com/api-keys)
-   - Your `SCIM_ENDPOINT_ID`, retrievable from the URL in the Directory Sync area of the WorkOS dashboard:
-    ![](scim_endpoint_location.png)  
+   - Your `DIRECTORY_ID`, retrievable from the URL in the Directory Sync area of the WorkOS dashboard:
+    ![](directory_id_location.png)  
 
-7. Ensure you're in the root directory for the example app, `python-django-dsync-example/`. Create a `.env` file to securely store the environment variables. Open this file with the Nano text editor. (This file is listed in this repo's `.gitignore` file, so your sensitive information will not be checked into version control.)
+7. Ensure you're in the root directory for the example app, `python-django-directory-sync-example/`. Create a `.env` file to securely store the environment variables. Open this file with the Nano text editor. (This file is listed in this repo's `.gitignore` file, so your sensitive information will not be checked into version control.)
    ```bash
    (env) $ touch .env
    (env) $ nano .env
@@ -56,7 +66,7 @@ A basic Django app that uses the [WorkOS Python SDK](https://github.com/workos-i
 8. Once the Nano text editor opens, you can directly edit the `.env` file by listing the environment variables:
    ```bash
    export WORKOS_API_KEY=<value found in step 6>
-   export WORKOS_PROJECT_ID=<value found in step 6>
+   export DIRECTORY_ID=<value found in step 6>
    ```
 
    To exit the Nano text editor, type `CTRL + x`. When prompted to "Save modified buffer", type `Y`, then press the `Enter` or `Return` key.
@@ -69,54 +79,46 @@ A basic Django app that uses the [WorkOS Python SDK](https://github.com/workos-i
    You can ensure the environment variables were set correctly by running the following commands. The output should match the corresponding values.
    ```bash
    (env) $ echo $WORKOS_API_KEY
-   (env) $ echo $WORKOS_PROJECT_ID
+   (env) $ echo $DIRECTORY_ID
    ```
 
-10. In `python-flask-sso-example/app.py` change the `CUSTOMER_EMAIL_DOMAIN` string value to an email domain that makes sense for your testing purposes if the default `gmail.com` isn't relevant.
+### Run Django Migrations and Start Server
 
-11. The final setup step is to start the server.
-   ```bash
-   (env) $ flask run
-   ```
+10. Run the Django migrations. Again, ensure you're in the `python-django-directory-sync-example/` directory where the `manange.py` file is.
+  ```bash
+  (env) $ python3 manage.py migrate
+  ```
 
-   You'll know the server is running when you see no errors in the CLI, and output similar to the following is displayed:
+  You should see output like:
+  ```bash
+  Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, sessions
+  Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  . . .
+  ```
 
-   ```bash
-   * Tip: There are .env or .flaskenv files present. Do "pip install python-dotenv" to use them.
-   * Environment: production
-   WARNING: This is a development server. Do not use it in a production deployment.
-   Use a production WSGI server instead.
-   * Debug mode: off
-   * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-   ```
+11. Start the server.
+  ```bash
+  (env) $ python3 manage.py runserver
+  ```
 
-   Navigate to `localhost:5000` in your web browser. You should see a "Login" button. If you click this link, you'll be redirected to an HTTP `404` page because we haven't set up SSO yet!
+  You'll know the server is running when you see no errors in the CLI, and output similar to the following is displayed:
 
-   You can stop the local Flask server for now by entering `CTRL + c` on the command line.
+  ```bash
+  Watching for file changes with StatReloader
+  Performing system checks...
 
+  System check identified no issues (0 silenced).
+  March 18, 2021 - 04:54:50
+  Django version 3.1.7, using settings 'workos_django.settings'
+  Starting development server at http://127.0.0.1:8000/
+  Quit the server with CONTROL-C.
+  ```
 
-## SSO Setup with WorkOS
-
-Follow the [SSO authentication flow instructions](https://workos.com/docs/sso/guide/introduction) to set up an SSO connection.
-
-When you get to the step where you provide the `REDIRECT_URI` value, use http://localhost:5000/auth/callback.
-
-If you get stuck, please reach out to us at support@workos.com so we can help.
-
-## Testing the Integration
-
-1. Naviagte to the `python-flask-sso-example` directory. Source the virtual environment we created earlier, if it isn't still activated from the steps above. Start the Flask server locally.
-
-   ```bash
-   $ cd ~/Desktop/python-flask-sso-example/
-   $ source env/bin/activate
-   (env) $ flask run
-   ```
-
-   Once running, navigate to http://localhost:5000 to test out the SSO workflow.
-
-   Hooray!
+12. Once the server is running, navigate to http://localhost:8000 and try out Directory Sync!
 
 ## Need help?
 
-If you get stuck and aren't able to resolve the issue by reading our API reference or tutorials, you can reach out to us at support@workos.com and we'll lend a hand.
+If you get stuck and aren't able to resolve the issue by reading our API reference or tutorials, please  reach out to us at support@workos.com and we'll help you out.
