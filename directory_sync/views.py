@@ -1,23 +1,23 @@
 import os
 
-import flask
 import workos
 
+from django.conf import settings
+from django.http import JsonResponse
 from django.shortcuts import render
 
 
 workos.api_key = os.getenv('WORKOS_API_KEY')
-workos.base_api_url = 'http://localhost:7000/' if settings.DEBUG else workos.base_api_url
-DIRECTORY = os.getenv('SCIM_ENDPOINT_ID')  # follow guide to get this
+workos.base_api_url = 'http://localhost:8000/' if settings.DEBUG else workos.base_api_url
+directory_id = os.getenv('DIRECTORY_ID')  # Follow the WorkOS guide to get this
 
 
-@app.route('/users')
-def directory_users():
-    users = workos.client.directory_sync.list_users(directory=DIRECTORY)
-    return users  # may need to return JsonResponse
+def get_directory_users(request):
+    users = workos.client.directory_sync.list_users(directory=directory_id)
+    print(users)
+    return JsonResponse(data=users)
 
 
-@app.route('/groups')
-def directory_groups():
-    groups = workos.client.directory_sync.list_groups(directory=DIRECTORY)
-    return groups # may need to return JsonResponse
+def get_directory_groups(request):
+    groups = workos.client.directory_sync.list_groups(directory=directory_id)
+    return JsonResponse(data=groups)
