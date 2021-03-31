@@ -54,7 +54,7 @@ If you get stuck, please reach out to us at support@workos.com so we can help.
 
 6. Obtain and make note of the following values. In the next step, these will be set as environment variables.
    - Your [WorkOS API key](https://dashboard.workos.com/api-keys)
-   - Your `DIRECTORY_ID`, retrievable from the URL in the Directory Sync area of the WorkOS dashboard:
+   - Your `DIRECTORY_ID`, in the format `directory_<random-alphanumeric-string>`, retrievable from the URL in the Directory Sync area of the WorkOS dashboard:
     ![](directory_id_location.png)  
 
 7. Ensure you're in the root directory for the example app, `python-django-directory-sync-example/`. Create a `.env` file to securely store the environment variables. Open this file with the Nano text editor. (This file is listed in this repo's `.gitignore` file, so your sensitive information will not be checked into version control.)
@@ -117,7 +117,11 @@ If you get stuck, please reach out to us at support@workos.com so we can help.
   Quit the server with CONTROL-C.
   ```
 
-12. Once the server is running, navigate to http://localhost:8000 and try out Directory Sync!
+12. Once the server is running, navigate to http://localhost:8000/users and http://localhost:8000/groups to try out Directory Sync!
+
+    - The `/users` URL corresponds to the WorkOS API's [List Directory Users endpoint](https://workos.com/docs/reference/directory-sync/user/list)
+    - The `/groups` URL corresponds to the WorkOS API's [List Directory Groups endpoint](https://workos.com/docs/reference/directory-sync/group/list)
+    - You can extend this Django example app by adding views to `directory_sync/views.py` for the other available [Directory Sync API endpoints](https://workos.com/docs/reference/directory-sync).
 
 ## Need help?
 
