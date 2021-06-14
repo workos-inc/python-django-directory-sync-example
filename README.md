@@ -45,7 +45,7 @@ If you get stuck, please reach out to us at support@workos.com so we can help.
    (env) $
    ```
 
-5. Install the cloned app's dependencies.
+5. Install the cloned app's dependencies. If the `pip` command doesn't work, try `pip3` instead.
    ```bash
    (env) $ pip install -r requirements.txt
    ```
