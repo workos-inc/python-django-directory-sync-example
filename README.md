@@ -104,7 +104,7 @@ If you get stuck, please reach out to us at support@workos.com so we can help.
   (env) $ python3 manage.py runserver
   ```
   To serve static files in development while still having debug=True in settings.py to able to send requests to WorkOS, be sure to include the --insecure flag when starting the server locally.
-    ```bash
+  ```bash
   (env) $ python3 manage.py runserver --insecure
   ```
 
