@@ -103,6 +103,10 @@ If you get stuck, please reach out to us at support@workos.com so we can help.
   ```bash
   (env) $ python3 manage.py runserver
   ```
+  To serve static files in development while still having debug=True in settings.py to able to send requests to WorkOS, be sure to include the --insecure flag when starting the server locally.
+  ```bash
+  (env) $ python3 manage.py runserver --insecure
+  ```
 
   You'll know the server is running when you see no errors in the CLI, and output similar to the following is displayed:
 
@@ -117,7 +121,7 @@ If you get stuck, please reach out to us at support@workos.com so we can help.
   Quit the server with CONTROL-C.
   ```
 
-12. Once the server is running, navigate to http://localhost:8000/users and http://localhost:8000/groups to try out Directory Sync!
+12. Once the server is running, navigate to http://localhost:8000 to view the home page of the app where you can then select the view for users or groups. Alternatively you could also view these directly using the following url's: http://localhost:8000/users and http://localhost:8000/groups.
 
     - The `/users` URL corresponds to the WorkOS API's [List Directory Users endpoint](https://workos.com/docs/reference/directory-sync/user/list)
     - The `/groups` URL corresponds to the WorkOS API's [List Directory Groups endpoint](https://workos.com/docs/reference/directory-sync/group/list)
@@ -125,6 +129,6 @@ If you get stuck, please reach out to us at support@workos.com so we can help.
 
 ## Need help?
 
-When you clone this repo, the `DEBUG` setting is `False` by default in `workos_django/settings.py`. You can set `DEBUG=True` if you need to troubleshoot something during the tutorial, but you must use `DEBUG=False` in order to successfully connect to the WorkOS API.
+When you clone this repo, the `DEBUG` setting is `False` by default in `workos_django/settings.py`. You can set `DEBUG=True` if you need to troubleshoot something during the tutorial, but you must use `DEBUG=False` in order to successfully connect to the WorkOS API. You may also leave the `DEBUG` setting as `False` and connect with WorkOS if you include the `--insecure` flag as referenced in step 11. 
 
 If you get stuck and aren't able to resolve the issue by reading our API reference or tutorials, please  reach out to us at support@workos.com and we'll help you out.
